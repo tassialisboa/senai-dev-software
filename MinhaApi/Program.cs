@@ -13,11 +13,19 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<
     IProdutoRepository,
     ProdutoRepository>();
+builder.Services.AddScoped<
+    IClienteRepository,
+    ClienteRepository>();
+    
 
 //Registra o service
 builder.Services.AddScoped<
     IProdutoService,
     ProdutoService>();
+builder.Services.AddScoped<
+    IClienteService,
+    ClienteService>();
+
     
 var app = builder.Build();
 
