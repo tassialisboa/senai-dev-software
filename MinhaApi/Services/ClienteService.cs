@@ -5,6 +5,7 @@ using MinhaApi.Services;
 public class ClienteService : IClienteService
 {
     private readonly IClienteRepository _repo;
+    
 
     public ClienteService(IClienteRepository repo) => _repo = repo;
 

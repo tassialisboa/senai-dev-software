@@ -43,12 +43,12 @@ public class ProdutoRepository : IProdutoRepository
     
     {
         using var conn = new MySqlConnection(_connectionString); conn.Open();
-        string sql = "Insert Into produtos (nome, preco, estoque, ativo) Values (@nome, @preco, @estoque, @ativo) VALUES (@Nome, @Preco, @Estoque, @Ativo); SELECT LAST_INSERT_ID();";
+        string sql = "Insert Into produtos (nome, preco, estoque, ativo) VALUES (@Nome, @Preco, @Estoque, @Ativo); SELECT LAST_INSERT_ID();";
         using var cmd = new MySqlCommand(sql, conn);
-        cmd.Parameters.AddWithValue("@nome", p.Nome);
-        cmd.Parameters.AddWithValue("@preco", p.Preco);
-        cmd.Parameters.AddWithValue("@estoque", p.Estoque);
-        cmd.Parameters.AddWithValue("@ativo", p.Ativo);
+        cmd.Parameters.AddWithValue("@Nome", p.Nome);
+        cmd.Parameters.AddWithValue("@Preco", p.Preco);
+        cmd.Parameters.AddWithValue("@Estoque", p.Estoque);
+        cmd.Parameters.AddWithValue("@Ativo", p.Ativo);
        var idGerado = cmd.ExecuteNonQuery();
        p.Id = Convert.ToInt32(idGerado);
        
