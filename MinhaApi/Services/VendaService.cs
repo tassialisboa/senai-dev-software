@@ -2,14 +2,14 @@ using MinhaApi.Models;
 using MinhaApi.Repositories;
 using MinhaApi.Services;
 
-public class VendaService : IVendasService
+public class VendaService : IVendaService
 {
-    private readonly IVendasRepository _vendaRepo;
+    private readonly IVendaRepository _vendaRepo;
     private readonly IClienteRepository _clienteRepo;
     private readonly IProdutoRepository _produtoRepo;
 
     public VendaService(
-        IVendasRepository vendaRepo,
+        IVendaRepository vendaRepo,
         IClienteRepository clienteRepo,
         IProdutoRepository produtoRepo)
     {
@@ -18,26 +18,26 @@ public class VendaService : IVendasService
         _produtoRepo = produtoRepo;
     }
 
-    public Vendas Create(Vendas venda)
+    public Venda Create(Venda venda)
     {
 
-        var cliente = _clienteRepo.GetById(venda.ClienteId);
+        var cliente = _clienteRepo.GetById(venda.clientes_id);
         if (cliente == null || !cliente.Ativo)
             throw new ArgumentException("Cliente inválido ou inativo!");
 
  
-        var produto = _produtoRepo.GetById(venda.ProdutoId);
+        var produto = _produtoRepo.GetById(venda.produtos_id);
         if (produto == null || !produto.Ativo)
             throw new ArgumentException("Produto inválido ou inativo!");
 
-        if (produto.Estoque < venda.Quantidade)
+        if (produto.Estoque < venda.quantidade)
             throw new ArgumentException("Estoque insuficiente!");
 
-        venda.ValorTotal = produto.Preco * venda.Quantidade;
-        venda.DataVenda = DateTime.Now;
+        venda.ValorTotal = produto.Preco * venda.quantidade;
+        venda.Data_Venda = DateTime.Now;
 
    
-        produto.Estoque -= venda.Quantidade;
+        produto.Estoque -= venda.quantidade;
         _produtoRepo.Update(produto);
 
         _vendaRepo.Add(venda);
